@@ -1,0 +1,61 @@
+<%= form_for(@post) do |f| %>
+  <% if @post.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+      <% @post.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :title %><br>
+    <%= f.text_field :title %>
+  </div>
+  <div class="field">
+    <%= f.label :subtitle %><br>
+    <%= f.text_field :subtitle %>
+  </div>
+  <div class="field">
+    <%= f.label :text %><br>
+    <%= f.text_area :text %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
+
+<script>
+
+$('#wysiwyg').froalaEditor({
+  toolbarInline: false,
+  heightMin: '200px',
+  toolbarButtons: ['bold', 'italic', 'underline', 'paragraphFormat', 'align', 'formatUL', 'formatOL', 'outdent', 'indent', 'insertLink', 'html', 'insertImage', 'emoticons'],
+  imageUploadToS3: {
+    bucket: '<%= @hash[:bucket] %>',
+    region: 's3', //might need to change this
+    keyStart: '<%= @hash[:key_start] %>',
+    callback: function (url, key) {
+      console.log (url);
+      console.log (key);
+    },
+    params: {}
+
+
+    }
+  }
+
+})
+
+
+
+
+
+
+
+
+
+
